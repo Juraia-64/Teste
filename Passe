@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passe de Batalha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            border-radius: 25px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress {
+            height: 20px;
+            background: #4caf50;
+            width: 0%;
+            text-align: center;
+            color: white;
+            line-height: 20px;
+            border-radius: 25px;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            width: calc(100% - 24px);
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Passe de Batalha</h1>
+        <p>Digite seus pontos para ver o nível alcançado:</p>
+        <input type="number" id="points" placeholder="Digite seus pontos" min="0">
+        <button onclick="calculateLevel()">Calcular Nível</button>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        // Configurações do passe de batalha
+        const pointsPerLevel = 1000; // Pontos necessários por nível
+        const maxLevel = 50; // Nível máximo
+
+        function calculateLevel() {
+            const points = parseInt(document.getElementById('points').value) || 0;
+            const level = Math.min(Math.floor(points / pointsPerLevel), maxLevel);
+            const progressInLevel = points % pointsPerLevel;
+            const progressPercent = (progressInLevel / pointsPerLevel) * 100;
+
+            // Atualizar barra de progresso
+            const progressBar = document.getElementById('progress');
+            progressBar.style.width = `${progressPercent}%`;
+            progressBar.textContent = `${progressInLevel}/${pointsPerLevel}`;
+
+            // Mostrar saída
+            const output = document.getElementById('output');
+            output.innerHTML = `Você alcançou o nível <strong>${level}</strong>.`;
+            if (level === maxLevel) {
+                output.innerHTML += " Parabéns, você atingiu o nível máximo!";
+            }
+        }
+    </script>
+</body>
+</html>
